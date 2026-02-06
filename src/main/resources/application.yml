@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:shop_db
+    username: "sa"
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true  # http://localhost:8080/h2-console
