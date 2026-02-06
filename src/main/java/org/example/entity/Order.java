@@ -24,7 +24,10 @@ public class Order {
   private UUID id;
 
   @ManyToMany
-  @JoinTable(name = "orders_products", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+  @JoinTable(
+      name = "orders_products",
+      joinColumns = @JoinColumn(name = "order_id"),
+      inverseJoinColumns = @JoinColumn(name = "product_id"))
   private Set<Product> products;
 
   @Enumerated(EnumType.STRING)

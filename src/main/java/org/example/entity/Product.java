@@ -17,6 +17,7 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
+
   private String name;
   private BigDecimal price;
   private int stock;

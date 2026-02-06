@@ -22,6 +22,9 @@ public class Cart {
   private UUID id;
 
   @ManyToMany
-  @JoinTable(name = "shopping_carts_products", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+  @JoinTable(
+      name = "shopping_carts_products",
+      joinColumns = @JoinColumn(name = "cart_id"),
+      inverseJoinColumns = @JoinColumn(name = "product_id"))
   private Set<Product> products;
 }

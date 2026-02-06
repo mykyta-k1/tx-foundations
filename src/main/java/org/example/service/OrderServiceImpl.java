@@ -26,9 +26,10 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public BigDecimal checkout() {
     // 1. Get current cart
-    Cart cart = cartRepository
-        .findFirstByOrderByIdAsc()
-        .orElseThrow(() -> new IllegalStateException("Cart not found"));
+    Cart cart =
+        cartRepository
+            .findFirstByOrderByIdAsc()
+            .orElseThrow(() -> new IllegalStateException("Cart not found"));
 
     // 2. Check cart is not empty
     if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
@@ -41,9 +42,8 @@ public class OrderServiceImpl implements OrderService {
     order.setStatus(OrderStatus.OPEN);
 
     // 4. Calculate total price
-    BigDecimal totalPrice = cart.getProducts().stream()
-        .map(Product::getPrice)
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
+    BigDecimal totalPrice =
+        cart.getProducts().stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
 
     // 5. Clear cart
     cart.getProducts().clear();
@@ -59,8 +59,8 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public void cancel() {
     // 1. Find the last open order
-    Order order = ((Iterable<Order>) orderRepository.findAll())
-        .iterator().hasNext()
+    Order order =
+        ((Iterable<Order>) orderRepository.findAll()).iterator().hasNext()
             ? ((Iterable<Order>) orderRepository.findAll()).iterator().next()
             : null;
 
@@ -75,11 +75,13 @@ public class OrderServiceImpl implements OrderService {
 
     // 3. Restore stock for each product
     for (Product product : order.getProducts()) {
-      Product dbProduct = productRepository
-          .findById(product.getId())
-          .orElseThrow(
-              () -> new IllegalStateException(
-                  "Product not found during cancel: " + product.getId()));
+      Product dbProduct =
+          productRepository
+              .findById(product.getId())
+              .orElseThrow(
+                  () ->
+                      new IllegalStateException(
+                          "Product not found during cancel: " + product.getId()));
 
       dbProduct.setStock(dbProduct.getStock() + 1);
       productRepository.save(dbProduct);

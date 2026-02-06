@@ -22,10 +22,11 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Product addToCart(UUID productId) {
     // 1. Find product by ID
-    Product product = productRepository
-        .findById(productId)
-        .orElseThrow(
-            () -> new IllegalArgumentException("Product not found with id: " + productId));
+    Product product =
+        productRepository
+            .findById(productId)
+            .orElseThrow(
+                () -> new IllegalArgumentException("Product not found with id: " + productId));
 
     // 2. Check stock availability
     if (product.getStock() <= 0) {
@@ -37,14 +38,15 @@ public class ProductServiceImpl implements ProductService {
     productRepository.save(product);
 
     // 4. Get or create cart (singleton pattern)
-    Cart cart = cartRepository
-        .findFirstByOrderByIdAsc()
-        .orElseGet(
-            () -> {
-              Cart newCart = new Cart();
-              newCart.setProducts(new HashSet<>());
-              return cartRepository.save(newCart);
-            });
+    Cart cart =
+        cartRepository
+            .findFirstByOrderByIdAsc()
+            .orElseGet(
+                () -> {
+                  Cart newCart = new Cart();
+                  newCart.setProducts(new HashSet<>());
+                  return cartRepository.save(newCart);
+                });
 
     // 5. Add product to cart
     cart.getProducts().add(product);

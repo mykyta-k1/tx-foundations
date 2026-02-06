@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CartRepository extends CrudRepository<Cart, UUID> {
 
-    @Query("SELECT c FROM Cart c LEFT JOIN FETCH c.products")
-    Optional<Cart> findFirstByOrderByIdAsc();
+  @Query("SELECT c FROM Cart c LEFT JOIN FETCH c.products")
+  Optional<Cart> findFirstByOrderByIdAsc();
 }
